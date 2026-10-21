@@ -111,7 +111,7 @@ node src/launcher.js        # interactive: mint / verify / screen / settings / 9
 | `GET /api/status` | **200** — регистрация включена, проверка e-mail включена, `turnstile_check: true`, отметка включена, sitekey `0x4AAAAAADUMi6GTHDf1f5T7` опубликован |
 | `GET /api/verification?email=<plain gmail>&turnstile=<fresh>` | **200** `{"message":"","success":true}` |
 | тот же вызов с алиасом `+` | **200** `{"message":"管理员已启用邮箱地址别名限制，您的邮箱地址由于包含特殊符号而被拒绝。","success":false}` — стена алиасов, измерено |
-| почта панели | **«Tokeness email verification»** от `send@mail.tokeness.cn`; код — шесть hex-символов в теле (`Your verification code is: 7ca362`), TTL 10 минут, доставка измерена 34 с – 4 мин |
+| почта панели | **«Tokeness email verification»** от `send@<panel-mail>`; код — шесть hex-символов в теле (`Your verification code is: 7ca362`), TTL 10 минут, доставка измерена 34 с – 4 мин |
 | `POST /api/user/register?turnstile=<fresh>` | **200** `{"success":true}` с `{username, password, email, verification_code, aff_code, turnstile}` |
 | `POST /api/user/login?turnstile=<fresh>` (простой пароль) | **200** — ответ несёт пакет аутентификации (`data.access_token`) |
 | `GET /api/user/self` | **200** `id`, `quota 18000`, `group default` — **только** с `Authorization: Bearer <access_token>`: только cookie отвечает `401 {"code":"AUTH_UNAUTHORIZED","message":"Unauthorized, invalid access token"}` |

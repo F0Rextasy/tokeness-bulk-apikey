@@ -111,7 +111,7 @@ node src/launcher.js        # interactive: mint / verify / screen / settings / 9
 | `GET /api/status` | **200** — 등록 켜짐, 이메일 인증 켜짐, `turnstile_check: true`, 체크인 켜짐, sitekey `0x4AAAAAADUMi6GTHDf1f5T7` 공개됨 |
 | `GET /api/verification?email=<plain gmail>&turnstile=<fresh>` | **200** `{"message":"","success":true}` |
 | `+` 별칭을 사용한 동일 호출 | **200** `{"message":"管理员已启用邮箱地址别名限制，您的邮箱地址由于包含特殊符号而被拒绝。","success":false}` — 별칭 장벽, 측정됨 |
-| 패널의 메일 | `send@mail.tokeness.cn`에서 온 **«Tokeness email verification»**; 코드는 본문에 있는 6자리 16진수(`Your verification code is: 7ca362`), TTL 10분, 전달 시간 34초 – 4분으로 측정됨 |
+| 패널의 메일 | `send@<panel-mail>`에서 온 **«Tokeness email verification»**; 코드는 본문에 있는 6자리 16진수(`Your verification code is: 7ca362`), TTL 10분, 전달 시간 34초 – 4분으로 측정됨 |
 | `POST /api/user/register?turnstile=<fresh>` | `{username, password, email, verification_code, aff_code, turnstile}`와 함께 **200** `{"success":true}` |
 | `POST /api/user/login?turnstile=<fresh>` (일반 비밀번호) | **200** — 응답에 인증 번들(`data.access_token`)이 포함됨 |
 | `GET /api/user/self` | **200** `id`, `quota 18000`, `group default` — **오직** `Authorization: Bearer <access_token>`이 있을 때만: 쿠키만으로는 `401 {"code":"AUTH_UNAUTHORIZED","message":"Unauthorized, invalid access token"}` |

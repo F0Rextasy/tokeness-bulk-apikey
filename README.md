@@ -111,7 +111,7 @@ The launcher asks for the proxy list and the count, remembers them in `launcher.
 | `GET /api/status` | **200** — register on, e-mail verification on, `turnstile_check: true`, check-in on, sitekey `0x4AAAAAADUMi6GTHDf1f5T7` published |
 | `GET /api/verification?email=<plain gmail>&turnstile=<fresh>` | **200** `{"message":"","success":true}` |
 | the same call with a `+` alias | **200** `{"message":"管理员已启用邮箱地址别名限制，您的邮箱地址由于包含特殊符号而被拒绝。","success":false}` — the alias wall, measured |
-| the panel's mail | **«Tokeness email verification»** from `send@mail.tokeness.cn`; the code is six hex chars in the body (`Your verification code is: 7ca362`), TTL 10 minutes, delivery measured 34 s – 4 min |
+| the panel's mail | **«Tokeness email verification»** from `send@<panel-mail>`; the code is six hex chars in the body (`Your verification code is: 7ca362`), TTL 10 minutes, delivery measured 34 s – 4 min |
 | `POST /api/user/register?turnstile=<fresh>` | **200** `{"success":true}` with `{username, password, email, verification_code, aff_code, turnstile}` |
 | `POST /api/user/login?turnstile=<fresh>` (plain password) | **200** — the answer carries the auth bundle (`data.access_token`) |
 | `GET /api/user/self` | **200** `id`, `quota 18000`, `group default` — **only** with `Authorization: Bearer <access_token>`: cookie-only answers `401 {"code":"AUTH_UNAUTHORIZED","message":"Unauthorized, invalid access token"}` |

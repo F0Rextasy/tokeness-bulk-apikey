@@ -111,7 +111,7 @@ node src/launcher.js        # interactive: mint / verify / screen / settings / 9
 | `GET /api/status` | **200** — 注册开启、邮箱验证开启、`turnstile_check: true`、签到开启、sitekey `0x4AAAAAADUMi6GTHDf1f5T7` 已公布 |
 | `GET /api/verification?email=<plain gmail>&turnstile=<fresh>` | **200** `{"message":"","success":true}` |
 | 使用 `+` 别名的同一调用 | **200** `{"message":"管理员已启用邮箱地址别名限制，您的邮箱地址由于包含特殊符号而被拒绝。","success":false}` — 别名墙，已实测 |
-| 面板的邮件 | 来自 `send@mail.tokeness.cn` 的 **«Tokeness email verification»**；验证码是正文中的六个十六进制字符（`Your verification code is: 7ca362`），有效期 10 分钟，实测送达时间 34 秒 – 4 分钟 |
+| 面板的邮件 | 来自 `send@<panel-mail>` 的 **«Tokeness email verification»**；验证码是正文中的六个十六进制字符（`Your verification code is: 7ca362`），有效期 10 分钟，实测送达时间 34 秒 – 4 分钟 |
 | `POST /api/user/register?turnstile=<fresh>` | **200** `{"success":true}`，请求体为 `{username, password, email, verification_code, aff_code, turnstile}` |
 | `POST /api/user/login?turnstile=<fresh>`（明文密码） | **200** — 响应携带认证包（`data.access_token`） |
 | `GET /api/user/self` | **200** `id`、`quota 18000`、`group default` — **仅**在带有 `Authorization: Bearer <access_token>` 时；仅用 cookie 会返回 `401 {"code":"AUTH_UNAUTHORIZED","message":"Unauthorized, invalid access token"}` |

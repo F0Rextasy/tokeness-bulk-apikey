@@ -111,7 +111,7 @@ Der Launcher fragt nach der Proxy-Liste und der Anzahl, merkt sie sich in `launc
 | `GET /api/status` | **200** — Registrierung an, E-Mail-Verifizierung an, `turnstile_check: true`, Check-in an, Sitekey `0x4AAAAAADUMi6GTHDf1f5T7` veröffentlicht |
 | `GET /api/verification?email=<plain gmail>&turnstile=<fresh>` | **200** `{"message":"","success":true}` |
 | derselbe Aufruf mit einem `+`-Alias | **200** `{"message":"管理员已启用邮箱地址别名限制，您的邮箱地址由于包含特殊符号而被拒绝。","success":false}` — die Alias-Wand, gemessen |
-| die Mail des Panels | **«Tokeness email verification»** von `send@mail.tokeness.cn`; der Code sind sechs Hex-Zeichen im Body (`Your verification code is: 7ca362`), TTL 10 Minuten, Zustellung gemessen 34 s – 4 min |
+| die Mail des Panels | **«Tokeness email verification»** von `send@<panel-mail>`; der Code sind sechs Hex-Zeichen im Body (`Your verification code is: 7ca362`), TTL 10 Minuten, Zustellung gemessen 34 s – 4 min |
 | `POST /api/user/register?turnstile=<fresh>` | **200** `{"success":true}` mit `{username, password, email, verification_code, aff_code, turnstile}` |
 | `POST /api/user/login?turnstile=<fresh>` (Klartext-Passwort) | **200** — die Antwort trägt das Auth-Bundle (`data.access_token`) |
 | `GET /api/user/self` | **200** `id`, `quota 18000`, `group default` — **nur** mit `Authorization: Bearer <access_token>`: nur-Cookie antwortet `401 {"code":"AUTH_UNAUTHORIZED","message":"Unauthorized, invalid access token"}` |

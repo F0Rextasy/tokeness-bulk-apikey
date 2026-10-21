@@ -111,7 +111,7 @@ Başlatıcı proxy listesini ve sayıyı sorar, bunları `launcher.config.json` 
 | `GET /api/status` | **200** — kayıt açık, e-posta doğrulama açık, `turnstile_check: true`, giriş açık, sitekey `0x4AAAAAADUMi6GTHDf1f5T7` yayınlanmış |
 | `GET /api/verification?email=<plain gmail>&turnstile=<fresh>` | **200** `{"message":"","success":true}` |
 | aynı çağrı bir `+` takma adıyla | **200** `{"message":"管理员已启用邮箱地址别名限制，您的邮箱地址由于包含特殊符号而被拒绝。","success":false}` — takma ad duvarı, ölçüldü |
-| panelin postası | `send@mail.tokeness.cn` adresinden **«Tokeness email verification»**; kod gövdede altı onaltılık karakterdir (`Your verification code is: 7ca362`), TTL 10 dakika, teslimat 34 sn – 4 dk ölçüldü |
+| panelin postası | `send@<panel-mail>` adresinden **«Tokeness email verification»**; kod gövdede altı onaltılık karakterdir (`Your verification code is: 7ca362`), TTL 10 dakika, teslimat 34 sn – 4 dk ölçüldü |
 | `POST /api/user/register?turnstile=<fresh>` | `{username, password, email, verification_code, aff_code, turnstile}` ile **200** `{"success":true}` |
 | `POST /api/user/login?turnstile=<fresh>` (düz parola) | **200** — yanıt kimlik doğrulama paketini taşır (`data.access_token`) |
 | `GET /api/user/self` | **200** `id`, `quota 18000`, `group default` — **yalnızca** `Authorization: Bearer <access_token>` ile: yalnızca çerezle `401 {"code":"AUTH_UNAUTHORIZED","message":"Unauthorized, invalid access token"}` yanıtı verir |

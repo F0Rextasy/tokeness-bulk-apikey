@@ -31,7 +31,7 @@
  *   3. browser   Chrome → `/register` → in-page Turnstile token
  *   4. send code `GET /api/verification?email=…&turnstile=<fresh>` (in-page fetch)
  *   5. code      poll the inbox — the panel mails «Tokeness email verification»
- *                from `send@mail.tokeness.cn`, the code is **six hex chars in the
+ *                from `send@<panel-mail>`, the code is **six hex chars in the
  *                body** (`Your verification code is: 7ca362`), life 10 minutes,
  *                delivery measured 34 s – 4 min, so the window defaults to 600 s
  *                and only mail naming tokeness is ever trusted (the pool boxes

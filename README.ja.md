@@ -111,7 +111,7 @@ node src/launcher.js        # interactive: mint / verify / screen / settings / 9
 | `GET /api/status` | **200** — 登録オン、メール認証オン、`turnstile_check: true`、チェックインオン、sitekey `0x4AAAAAADUMi6GTHDf1f5T7` が公開 |
 | `GET /api/verification?email=<plain gmail>&turnstile=<fresh>` | **200** `{"message":"","success":true}` |
 | `+` エイリアスを使った同じ呼び出し | **200** `{"message":"管理员已启用邮箱地址别名限制，您的邮箱地址由于包含特殊符号而被拒绝。","success":false}` — エイリアスの壁、計測済み |
-| パネルのメール | `send@mail.tokeness.cn` からの **«Tokeness email verification»**。コードは本文中の 6 桁の 16 進文字（`Your verification code is: 7ca362`）、TTL 10 分、配信は 34 秒〜4 分で計測 |
+| パネルのメール | `send@<panel-mail>` からの **«Tokeness email verification»**。コードは本文中の 6 桁の 16 進文字（`Your verification code is: 7ca362`）、TTL 10 分、配信は 34 秒〜4 分で計測 |
 | `POST /api/user/register?turnstile=<fresh>` | **200** `{"success":true}`、`{username, password, email, verification_code, aff_code, turnstile}` とともに |
 | `POST /api/user/login?turnstile=<fresh>`（プレーンパスワード） | **200** — 応答は認証バンドル（`data.access_token`）を含みます |
 | `GET /api/user/self` | **200** `id`、`quota 18000`、`group default` — **`Authorization: Bearer <access_token>` がある場合のみ**：Cookie のみでは `401 {"code":"AUTH_UNAUTHORIZED","message":"Unauthorized, invalid access token"}` |

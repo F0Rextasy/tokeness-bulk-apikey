@@ -111,7 +111,7 @@ O launcher pede a lista de proxies e a contagem, memoriza-os em `launcher.config
 | `GET /api/status` | **200** — registro ativado, verificação de e-mail ativada, `turnstile_check: true`, check-in ativado, sitekey `0x4AAAAAADUMi6GTHDf1f5T7` publicada |
 | `GET /api/verification?email=<plain gmail>&turnstile=<fresh>` | **200** `{"message":"","success":true}` |
 | a mesma chamada com um alias `+` | **200** `{"message":"管理员已启用邮箱地址别名限制，您的邮箱地址由于包含特殊符号而被拒绝。","success":false}` — a barreira do alias, medida |
-| o e-mail do painel | **«Tokeness email verification»** de `send@mail.tokeness.cn`; o código tem seis caracteres hexadecimais no corpo (`Your verification code is: 7ca362`), TTL de 10 minutos, entrega medida entre 34 s – 4 min |
+| o e-mail do painel | **«Tokeness email verification»** de `send@<panel-mail>`; o código tem seis caracteres hexadecimais no corpo (`Your verification code is: 7ca362`), TTL de 10 minutos, entrega medida entre 34 s – 4 min |
 | `POST /api/user/register?turnstile=<fresh>` | **200** `{"success":true}` com `{username, password, email, verification_code, aff_code, turnstile}` |
 | `POST /api/user/login?turnstile=<fresh>` (senha simples) | **200** — a resposta carrega o pacote de autenticação (`data.access_token`) |
 | `GET /api/user/self` | **200** `id`, `quota 18000`, `group default` — **somente** com `Authorization: Bearer <access_token>`: apenas com cookie responde `401 {"code":"AUTH_UNAUTHORIZED","message":"Unauthorized, invalid access token"}` |
