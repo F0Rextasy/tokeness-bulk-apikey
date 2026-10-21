@@ -46,7 +46,7 @@ Tokeness, küresel bir CDN arkasındaki bir **New-API çatalıdır** (`v1.0.0-rc
 | Günlük giriş | `checkin_enabled: true`, ancak bir oturumla `200 {"success":false,"message":"Turnstile token 为空"}` yanıtını verir — kendi token'ını ister, bu yüzden araç bunu talep etmeden bırakır |
 | Adres politikası | **yalnızca gmail.com ve outlook.com** (gerçek token'larla alan adı alan adı denendi); `+` takma adı aynen reddedilir — `管理员已启用邮箱地址别名限制，您的邮箱地址由于包含特殊符号而被拒绝。` |
 | Adres başına bir hesap | bir adres bir kez kullanılır; reddedilen/alınmış bir kutu yeni bir Emailnator kutusuyla değiştirilir |
-| Çıkış sınıfı | Turnstile widget'ı yönetilen modda bir **konut çıkışından** geçer (WARP ve düz bir konut ana makinesi ölçüldü); bir veri merkezi IP'si tarayıcıda `600010` yanıtını verir (0/60 tıklama) |
+| Çıkış sınıfı | Turnstile widget'ı yönetilen modda bir **konut çıkışından** geçer (proxy ve düz bir konut ana makinesi ölçüldü); bir veri merkezi IP'si tarayıcıda `600010` yanıtını verir (0/60 tıklama) |
 | Ölçeklenen birim | **bir hesap = bir anahtar** ve anahtar yalnızca canlı bir sohbet 200'ünden sonra yazılır |
 
 > 💡 Ücretsiz katman Tokeness tarafından belirlenir ve değişebilir. Canlı sayıları [tokeness.ai](https://tokeness.ai) adresinden kontrol edin — ve kararı aracın kendi kapısına bırakın:

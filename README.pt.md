@@ -46,7 +46,7 @@ Tokeness é um **fork do New-API** (`v1.0.0-rc.40-tokeness-intl.15`) atrás de u
 | Check-in diário | `checkin_enabled: true`, mas com uma sessão ele responde `200 {"success":false,"message":"Turnstile token 为空"}` — ele quer seu próprio token, então a ferramenta deixa isso sem reivindicar |
 | Política de endereço | **apenas gmail.com e outlook.com** (testado domínio por domínio com tokens reais); um alias com `+` é recusado literalmente — `管理员已启用邮箱地址别名限制，您的邮箱地址由于包含特殊符号而被拒绝。` |
 | Uma conta por endereço | um endereço é usado uma vez; uma caixa recusada/ocupada é substituída por uma nova caixa do Emailnator |
-| Classe de saída | o widget Turnstile passa em modo gerenciado a partir de uma **saída residencial** (WARP e um host residencial comum foram medidos); um IP de datacenter responde `600010` no navegador (0/60 cliques) |
+| Classe de saída | o widget Turnstile passa em modo gerenciado a partir de uma **saída residencial** (proxy e um host residencial comum foram medidos); um IP de datacenter responde `600010` no navegador (0/60 cliques) |
 | A unidade que escala | **uma conta = uma chave**, e a chave só é gravada após um chat 200 ao vivo |
 
 > 💡 O nível gratuito é definido pela Tokeness e pode mudar. Confira os números ao vivo em [tokeness.ai](https://tokeness.ai) — e deixe o próprio gate da ferramenta decidir:

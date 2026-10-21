@@ -46,7 +46,7 @@ Tokeness is a **New-API fork** (`v1.0.0-rc.40-tokeness-intl.15`) behind a global
 | Daily check-in | `checkin_enabled: true`, but with a session it answers `200 {"success":false,"message":"Turnstile token 为空"}` — it wants its own token, so the tool leaves it unclaimed |
 | Address policy | **gmail.com and outlook.com only** (probed domain by domain with real tokens); a `+` alias is refused verbatim — `管理员已启用邮箱地址别名限制，您的邮箱地址由于包含特殊符号而被拒绝。` |
 | One account per address | an address is spent once; a refused/taken box is replaced by a fresh Emailnator box |
-| Exit class | the Turnstile widget passes in managed mode from a **residential exit** (WARP and a plain residential host both measured); a datacenter IP answers `600010` in the browser (0/60 clicks) |
+| Exit class | the Turnstile widget passes in managed mode from a **residential exit** (proxy and a plain residential host both measured); a datacenter IP answers `600010` in the browser (0/60 clicks) |
 | The unit that scales | **one account = one key**, and the key is written only after a live chat 200 |
 
 > 💡 The free tier is set by Tokeness and can change. Check the live numbers at [tokeness.ai](https://tokeness.ai) — and let the tool's own gate decide:

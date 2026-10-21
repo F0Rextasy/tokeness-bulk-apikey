@@ -9,7 +9,7 @@
  * Three gates stack on this panel, and all three are handled here:
  *   1. Cloudflare Turnstile (`0x4AAAAAADUMi6GTHDf1f5T7`); every auth route wants
  *      `?turnstile=`. The widget passes in managed mode through a residential
- *      exit (WARP measured), so the tool launches a real Chrome over one vetted
+ *      exit (proxy measured), so the tool launches a real Chrome over one vetted
  *      exit and drives an explicit-render widget via CDP (Page/Runtime + a tiny
  *      built-in WebSocket client — still zero dependencies). Datacenter exits
  *      never issue a token here (0/60 clicks, error `600010`), which is exactly
