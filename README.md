@@ -107,6 +107,11 @@ The launcher asks for the proxy list and the count, remembers them in `launcher.
 
 ## ✅ Verified working — every key is tested
 
+> **Quality gates.** Every key here passed a live `chat-200` before it was written to `keys.txt`
+> (dead keys are never shipped). Router combos follow the same rule at the model level: an entry is
+> added **only if the model answers `chat-200` and can call tools** — a model without tool support,
+> a dead key or a dead provider is dropped instead of added. Works with **9Router and OmniRoute**.
+
 | Check | Result |
 | --- | --- |
 | `GET /api/status` | **200** — register on, e-mail verification on, `turnstile_check: true`, check-in on, sitekey `0x4AAAAAADUMi6GTHDf1f5T7` published |
@@ -192,7 +197,6 @@ node src/cli.js --connect-9router      # same, from the CLI
 ```
 
 Defaults: `--prefix tokeness`, `--base-url https://tokeness.ai/v1`, `--model tokeness/free`. Models are served as `tokeness/<model id>`.
-
 
 ## 🔌 Connect to OmniRoute
 
