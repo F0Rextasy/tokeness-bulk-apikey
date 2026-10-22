@@ -57,7 +57,7 @@ node src/cli.js --verify-only     # every key in keys.txt is re-tested with a re
 
 ## 🤖 Models — all 22 of them
 
-`GET /v1/models` (200 with a live key) advertises **22 ids**:
+`GET /v1/models` (200 with a verified keys) advertises **22 ids**:
 
 | Model ID | note |
 | --- | --- |
@@ -117,9 +117,9 @@ The launcher asks for the proxy list and the count, remembers them in `launcher.
 | `GET /api/user/self` | **200** `id`, `quota 18000`, `group default` — **only** with `Authorization: Bearer <access_token>`: cookie-only answers `401 {"code":"AUTH_UNAUTHORIZED","message":"Unauthorized, invalid access token"}` |
 | `POST /api/token/` | **200** but **no key in the answer**; the list hands it out masked (`xxek**********VKbX`); `POST /api/token/<id>/key` → **200** with the real 48-char key |
 | `GET /v1/models` | **200**, **22** ids |
-| `POST /v1/chat/completions` (`tokeness/free`) — for **every** key before it is written | **200** with real content — the run completed **10/10 keys** |
-| **one full mint from this package** (`--count 1`, direct, no pool) | **1/1 key in 57 s** — mailbox, 730-char token, code, register 200, login 200, key 200, chat 200 |
-| independent re-check of `keys.txt` (separate process, `--verify-only`) | **11/11 keys live** — `tokeness/free` for ten of them, `mimo-v2.6-flash` for the eleventh |
+| `POST /v1/chat/completions` (`tokeness/free`) — for **every** key before it is written | **200** with real content — the run completed **verified** |
+| **one full mint from this package** (`--count 1`, direct, no pool) | **verified** — mailbox, 730-char token, code, register 200, login 200, key 200, chat 200 |
+| independent re-check of `keys.txt` (separate process, `--verify-only`) | **verified working** — `tokeness/free` for ten of them, `mimo-v2.6-flash` for the eleventh |
 | `--screen` over a mixed exit sample | the residential exit and one datacenter exit passed the `/api/status` + Turnstile-asset gates; two others timed out — the browser rail still needs an exit class the widget accepts |
 
 ## 🧭 How it works
