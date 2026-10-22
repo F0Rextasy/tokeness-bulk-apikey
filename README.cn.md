@@ -95,6 +95,7 @@ print(c.chat.completions.create(model="tokeness/free",
 cd tokeness-bulk-apikey
 printf 'socks5://host:port\n' > proxies.txt   # optional, but a residential-class exit is what the widget likes
 node src/launcher.js        # interactive: mint / verify / screen / settings / 9Router
+
 # or: node src/cli.js --count 1 --pool proxies.txt
 ```
 

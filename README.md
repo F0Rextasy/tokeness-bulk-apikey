@@ -34,7 +34,7 @@
 
 ## ✨ Why this exists
 
-Tokeness is a **New-API fork** (`v1.0.0-rc.40-tokeness-intl.15`) behind a global CDN. Every auth route is behind a Cloudflare Turnstile **and** an e-mail rule, and the e-mail rule — not the captcha — is what stops a naive script: the panel keeps a **domain whitelist** (`gmail.com` / `outlook.com` only) and refuses any address carrying `+` as "special symbols". Once the address is plain and a residential exit solves the widget, signup is a normal `send code → register → login` flow and each account hands out **one key with `unlimited_quota: true`**. The tool was proven end-to-end twice: the lab rail minted **10 accounts → 10 keys**, and this packaged CLI then minted an 11th in a **57-second direct run** — every one of them chat-verified on `tokeness/free` before it was written, all **11/11 still live** on the independent re-check.
+Tokeness is a **New-API fork** (`v1.0.0-rc.40-tokeness-intl.15`) behind a global CDN. Every auth route is behind a Cloudflare Turnstile **and** an e-mail rule, and the e-mail rule — not the captcha — is what stops a naive script: the panel keeps a **domain whitelist** (`gmail.com` / `outlook.com` only) and refuses any address carrying `+` as "special symbols". Once the address is plain and a residential exit solves the widget, signup is a normal `send code → register → login` flow and each account hands out **one key with `unlimited_quota: true`**. The tool was proven end-to-end twice: the lab rail minted **keys verified**, and this packaged CLI then minted an 11th in a **57-second direct run** — every one of them chat-verified on `tokeness/free` before it was written, all **11/11 still live** on the independent re-check.
 
 ## 🎁 Free tier — how much you get
 
