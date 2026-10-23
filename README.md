@@ -103,7 +103,22 @@ A key is written to `keys.txt` **only** after `POST /v1/chat/completions` answer
 
 ### 🖱️ The launcher
 
-The launcher asks for the proxy list and the count, remembers them in `launcher.config.json`, and runs the CLI — mint, verify, screen exits, settings, help, Connect to 9Router.
+The launcher is the one-command path: it asks how many keys you want (Enter = `10`) and runs the CLI with `--auto`; `proxies.txt` is picked up automatically when it exists, otherwise the run goes direct. It also re-checks every key, screens your exit list, shows the remembered settings, connects keys to 9Router / OmniRoute — and it checks for Chrome up front, so a missing browser is reported before a run starts.
+
+### 🚀 One command
+
+```bash
+node src/launcher.js       # menu → "1) Mint keys" → how many keys? [10]
+node src/cli.js --count 10 # the same run, non-interactive
+```
+
+That is the whole tool: `--auto` is on by default — the Turnstile is solved in the built-in browser rail (a real Chrome over one pinned exit from `proxies.txt`, or DIRECT when there is none) and a key reaches `keys.txt` only after its own live chat 200. `--dry` prints the resolved plan — count, exits, solver, model — and exits without touching a file or the network:
+
+```bash
+node src/cli.js --count 10 --dry
+```
+
+> ⚠️ **Terms & account risk.** Automating a third-party sign-up is your call and your responsibility, not this repository's. Read Tokeness's terms before you run this and respect them: the panel ties one account to one address, refuses plus-alias mail, can ban what it notices, and its e-mail/captcha rules can change without notice. Mint only what you actually use.
 
 ## ✅ Verified working — every key is tested
 
@@ -163,11 +178,13 @@ node src/cli.js --connect-9router              # register keys.txt with a local 
 node src/cli.js --help
 ```
 
-| Env | Default | Meaning |
+| Env / flag | Default | Meaning |
 | --- | --- | --- |
 | `TOKENESS_PROXIES` | `proxies.txt` | exit pool, one line per proxy |
 | `TOKENESS_MODEL` | `tokeness/free` | model used for the live gate |
 | `CHROME_PATH` | auto-detected | Chrome/Edge binary for the captcha browser |
+| `--auto` | `on` | solve the Turnstile in the built-in browser rail (default) |
+| `--dry` | `off` | print the resolved plan and exit — no file writes, no requests |
 
 The CLI runs one account at a time: the panel ties an account to its address and its exit, so parallel runs only race for the same resource.
 
@@ -186,6 +203,7 @@ The CLI runs one account at a time: the panel ties an account to its address and
 | `keys.txt` | one live-verified key per line — git-ignored |
 | `accounts.json` | e-mail / username / password / key / exit / quota / step statuses — git-ignored |
 | `proxies.txt` | your exits — git-ignored |
+| `keys-dead.txt` | keys that stopped answering `--verify-only` — git-ignored |
 | `out/` | run logs, screenshots and `attempts.jsonl` (one line per failed attempt with its fail class) — git-ignored |
 
 ## 🔌 Connect to 9Router

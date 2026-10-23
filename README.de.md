@@ -35,7 +35,7 @@
 
 ## ✨ Warum es das gibt
 
-Tokeness ist ein **New-API-Fork** (`v1.0.0-rc.40-tokeness-intl.15`) hinter einem globalen CDN. Jede Auth-Route liegt hinter einem Cloudflare Turnstile **und** einer E-Mail-Regel, und die E-Mail-Regel — nicht das Captcha — ist das, was ein naives Skript stoppt: Das Panel führt eine **Domain-Whitelist** (`gmail.com` / `outlook.com` only) und lehnt jede Adresse mit `+` als „Sonderzeichen" ab. Sobald die Adresse schlicht ist und ein Residential-Exit das Widget löst, ist die Anmeldung ein normaler `send code → register → login`-Ablauf, und jedes Konto gibt **einen Schlüssel mit `unlimited_quota: true`** aus. Das Tool wurde zweimal Ende-zu-Ende bewiesen: Die Lab-Schiene hat **jedes Konto hat seinen eigenen Schlüssel erzeugt**, und diese paketierte CLI hat dann einen 11. in einem **57-Sekunden-Direktlauf** erzeugt — jeder einzelne davon chat-verifiziert auf `tokeness/free`, bevor er geschrieben wurde, alle **11/11 noch live** beim unabhängigen Nachcheck.
+Tokeness ist ein **New-API-Fork** (`v1.0.0-rc.40-tokeness-intl.15`) hinter einem globalen CDN. Jede Auth-Route liegt hinter einem Cloudflare Turnstile **und** einer E-Mail-Regel, und die E-Mail-Regel — nicht das Captcha — ist das, was ein naives Skript stoppt: Das Panel führt eine **Domain-Whitelist** (`gmail.com` / `outlook.com` only) und lehnt jede Adresse mit `+` als „special symbols" ab. Sobald die Adresse schlicht ist und ein Residential-Exit das Widget löst, ist die Anmeldung ein normaler `send code → register → login`-Ablauf, und jedes Konto gibt **einen Schlüssel mit `unlimited_quota: true`** aus. Das Tool wurde zweimal Ende-zu-Ende bewiesen: Die Lab-Schiene erzeugte **jedes Konto erzeugte seinen eigenen Schlüssel**, und diese paketierte CLI erzeugte dann einen 11. in einem **57-Sekunden-Direktlauf** — jeder einzelne davon chat-verifiziert auf `tokeness/free`, bevor er geschrieben wurde, alle **11/11 noch live** bei der unabhängigen Nachprüfung.
 
 ## 🎁 Kostenlose Stufe — wie viel du bekommst
 
@@ -43,8 +43,8 @@ Tokeness ist ein **New-API-Fork** (`v1.0.0-rc.40-tokeness-intl.15`) hinter einem
 | --- | --- |
 | Anmeldekontingent pro Konto | **18000 Einheiten** — `GET /api/user/self` antwortet `quota: 18000` bei jedem frischen Konto |
 | Was das wert ist | `quota_per_unit 500000`, `usd_exchange_rate 7`, `price 7` → die Zuweisung beträgt **≈ $0.036** |
-| Schlüssel-Kontingent | der Schlüssel wird mit `unlimited_quota: true` erstellt, also ist die Prüfung auf Token-Ebene aus; das eigene Kontingent des Kontos begrenzt weiterhin das Relay |
-| Täglicher Check-in | `checkin_enabled: true`, aber mit einer Sitzung antwortet es `200 {"success":false,"message":"Turnstile token 为空"}` — es will sein eigenes Token, also lässt das Tool es unbeansprucht |
+| Schlüssel-Kontingent | der Schlüssel wird mit `unlimited_quota: true` erstellt, also ist die Prüfung auf Token-Ebene aus; das eigene Kontingent des Kontos begrenzt weiterhin den Relay |
+| Täglicher Check-in | `checkin_enabled: true`, aber mit einer Session antwortet es `200 {"success":false,"message":"Turnstile token 为空"}` — es will sein eigenes Token, also lässt das Tool es unbeansprucht |
 | Adressrichtlinie | **nur gmail.com und outlook.com** (Domain für Domain mit echten Tokens geprüft); ein `+`-Alias wird wortwörtlich abgelehnt — `管理员已启用邮箱地址别名限制，您的邮箱地址由于包含特殊符号而被拒绝。` |
 | Ein Konto pro Adresse | eine Adresse wird einmal verbraucht; eine abgelehnte/belegte Box wird durch eine frische Emailnator-Box ersetzt |
 | Exit-Klasse | das Turnstile-Widget passiert im Managed-Modus von einem **Residential-Exit** (WARP und ein einfacher Residential-Host wurden beide gemessen); eine Datacenter-IP antwortet `600010` im Browser (0/60 Klicks) |
@@ -62,8 +62,8 @@ node src/cli.js --verify-only     # every key in keys.txt is re-tested with a re
 
 | Modell-ID | Anmerkung |
 | --- | --- |
-| `tokeness/free` | **die verifizierte Zeile — jeder Schlüssel antwortete 200 darauf (11/11 beim Nachcheck)** |
-| `mimo-v2.6-flash` | **ebenfalls 200 aufgezeichnet** — ein Schlüssel antwortete `ok` darauf während des unabhängigen Nachchecks |
+| `tokeness/free` | **die verifizierte Zeile — jeder Schlüssel antwortete 200 darauf (11/11 bei der Nachprüfung)** |
+| `mimo-v2.6-flash` | **ebenfalls 200 aufgezeichnet** — ein Schlüssel antwortete `ok` darauf während der unabhängigen Nachprüfung |
 | `deepseek-v4.1-flash`, `deepseek-v4.1-flash-1017`, `deepseek-v4-flash`, `deepseek-v4-flash-vision-exp`, `deepseek-v4-pro` | beworben, nicht einzeln gegated |
 | `glm-5.3`, `glm-5.3-flash`, `glm-5.3-flashx` | beworben, nicht einzeln gegated |
 | `qwen3.8-flash`, `qwen3.7-plus`, `qwen3.8-max` | beworben, nicht einzeln gegated |
@@ -71,7 +71,7 @@ node src/cli.js --verify-only     # every key in keys.txt is re-tested with a re
 | `kimi-k2.6`, `kimi-k2.7-code`, `kimi-k3` | beworben, nicht einzeln gegated |
 | `minimax-m3`, `muse-spark-1.3-contributor`, `hy3` | beworben, nicht einzeln gegated |
 
-`tokeness/free` ist das Modell, auf das jeder Schlüssel gegated wurde; `mimo-v2.6-flash` bekam ebenfalls ein 200. Die übrigen IDs werden von `/v1/models` beworben, wurden aber nicht einzeln chat-gegated, daher werden sie hier nicht beansprucht.
+`tokeness/free` ist das Modell, auf dem jeder Schlüssel gegated wurde; `mimo-v2.6-flash` holte ebenfalls ein 200. Die übrigen IDs werden von `/v1/models` beworben, wurden aber nicht einzeln chat-gegated, daher werden sie hier nicht beansprucht.
 
 ```bash
 curl https://tokeness.ai/v1/chat/completions \
@@ -104,7 +104,22 @@ Ein Schlüssel wird **nur** dann in `keys.txt` geschrieben, wenn `POST /v1/chat/
 
 ### 🖱️ Der Launcher
 
-Der Launcher fragt nach der Proxy-Liste und der Anzahl, merkt sie sich in `launcher.config.json` und führt die CLI aus — mint, verify, screen exits, settings, help, Connect to 9Router.
+Der Launcher ist der Ein-Befehl-Pfad: Er fragt, wie viele Schlüssel du willst (Enter = `10`) und führt die CLI mit `--auto` aus; `proxies.txt` wird automatisch übernommen, wenn es existiert, andernfalls läuft der Lauf direkt. Er prüft außerdem jeden Schlüssel erneut, screent deine Exit-Liste, zeigt die gemerkten Einstellungen, verbindet Schlüssel mit 9Router / OmniRoute — und er prüft Chrome im Voraus, sodass ein fehlender Browser gemeldet wird, bevor ein Lauf startet.
+
+### 🚀 Ein Befehl
+
+```bash
+node src/launcher.js       # menu → "1) Mint keys" → how many keys? [10]
+node src/cli.js --count 10 # the same run, non-interactive
+```
+
+Das ist das ganze Tool: `--auto` ist standardmäßig an — das Turnstile wird in der eingebauten Browser-Schiene gelöst (ein echtes Chrome über einen gepinnten Exit aus `proxies.txt`, oder DIRECT, wenn keiner vorhanden ist) und ein Schlüssel erreicht `keys.txt` erst nach seinem eigenen Live-Chat-200. `--dry` gibt den aufgelösten Plan aus — Anzahl, Exits, Solver, Modell — und beendet sich, ohne eine Datei oder das Netzwerk anzufassen:
+
+```bash
+node src/cli.js --count 10 --dry
+```
+
+> ⚠️ **Bedingungen & Kontorisiko.** Die Anmeldung bei einem Drittanbieter zu automatisieren ist deine Entscheidung und deine Verantwortung, nicht die dieses Repositories. Lies die Bedingungen von Tokeness, bevor du das ausführst, und respektiere sie: Das Panel bindet ein Konto an eine Adresse, lehnt Plus-Alias-Mail ab, kann sperren, was es bemerkt, und seine E-Mail-/Captcha-Regeln können sich ohne Vorankündigung ändern. Erzeuge nur, was du tatsächlich nutzt.
 
 ## ✅ Verifiziert funktionierend — jeder Schlüssel wird getestet
 
@@ -112,23 +127,23 @@ Der Launcher fragt nach der Proxy-Liste und der Anzahl, merkt sie sich in `launc
 | --- | --- |
 | `GET /api/status` | **200** — Registrierung an, E-Mail-Verifizierung an, `turnstile_check: true`, Check-in an, Sitekey `0x4AAAAAADUMi6GTHDf1f5T7` veröffentlicht |
 | `GET /api/verification?email=<plain gmail>&turnstile=<fresh>` | **200** `{"message":"","success":true}` |
-| derselbe Aufruf mit einem `+`-Alias | **200** `{"message":"管理员已启用邮箱地址别名限制，您的邮箱地址由于包含特殊符号而被拒绝。","success":false}` — die Alias-Mauer, gemessen |
+| derselbe Aufruf mit einem `+`-Alias | **200** `{"message":"管理员已启用邮箱地址别名限制，您的邮箱地址由于包含特殊符号而被拒绝。","success":false}` — die Alias-Wand, gemessen |
 | die Mail des Panels | **«Tokeness email verification»** von `noreply@<panel-mail>`; der Code sind sechs Hex-Zeichen im Body (`Your verification code is: 7ca362`), TTL 10 Minuten, Zustellung gemessen 34 s – 4 min |
 | `POST /api/user/register?turnstile=<fresh>` | **200** `{"success":true}` mit `{username, password, email, verification_code, aff_code, turnstile}` |
 | `POST /api/user/login?turnstile=<fresh>` (einfaches Passwort) | **200** — die Antwort trägt das Auth-Bundle (`data.access_token`) |
-| `GET /api/user/self` | **200** `id`, `quota 18000`, `group default` — **nur** mit `Authorization: Bearer <access_token>`: nur-Cookie-Antworten `401 {"code":"AUTH_UNAUTHORIZED","message":"Unauthorized, invalid access token"}` |
-| `POST /api/token/` | **200**, aber **kein Schlüssel in der Antwort**; die Liste gibt ihn maskiert aus (`xxek**********VKbX`); `POST /api/token/<id>/key` → **200** mit dem echten 48-Zeichen-Schlüssel |
+| `GET /api/user/self` | **200** `id`, `quota 18000`, `group default` — **nur** mit `Authorization: Bearer <access_token>`: Nur-Cookie-Antworten `401 {"code":"AUTH_UNAUTHORIZED","message":"Unauthorized, invalid access token"}` |
+| `POST /api/token/` | **200**, aber **kein Schlüssel in der Antwort**; die Liste gibt ihn maskiert heraus (`xxek**********VKbX`); `POST /api/token/<id>/key` → **200** mit dem echten 48-Zeichen-Schlüssel |
 | `GET /v1/models` | **200**, **22** IDs |
 | `POST /v1/chat/completions` (`tokeness/free`) — für **jeden** Schlüssel, bevor er geschrieben wird | **200** mit echtem Inhalt — der Lauf hat jeden Schlüssel abgeschlossen |
-| **ein vollständiger Mint aus diesem Paket** (`--count 1`, direkt, kein Pool) | **jeder Schlüssel in 57 s** — Mailbox, 730-Zeichen-Token, Code, register 200, login 200, key 200, chat 200 |
-| unabhängiger Nachcheck von `keys.txt` (separater Prozess, `--verify-only`) | **jeder Schlüssel verifiziert** — `tokeness/free` für zehn davon, `mimo-v2.6-flash` für den elften |
-| `--screen` über eine gemischte Exit-Stichprobe | der Residential-Exit und ein Datacenter-Exit passierten die `/api/status`- + Turnstile-Asset-Gates; zwei andere liefen in ein Timeout — die Browser-Schiene braucht weiterhin eine Exit-Klasse, die das Widget akzeptiert |
+| **ein vollständiger Mint aus diesem Paket** (`--count 1`, direkt, kein Pool) | **jeder Schlüssel in 57 s** — Mailbox, 730-Zeichen-Token, Code, Register 200, Login 200, Key 200, Chat 200 |
+| unabhängige Nachprüfung von `keys.txt` (separater Prozess, `--verify-only`) | **jeder Schlüssel verifiziert** — `tokeness/free` für zehn davon, `mimo-v2.6-flash` für den elften |
+| `--screen` über eine gemischte Exit-Stichprobe | der Residential-Exit und ein Datacenter-Exit bestanden die `/api/status`- + Turnstile-Asset-Gates; zwei andere liefen in Timeouts — die Browser-Schiene braucht weiterhin eine Exit-Klasse, die das Widget akzeptiert |
 
-> **Qualitätsgates.** Jeder Schlüssel hier hat ein Live-`chat-200` bestanden, bevor er in `keys.txt`
-> geschrieben wurde (tote Schlüssel werden nie ausgeliefert). Router-Kombos folgen derselben Regel auf Modellebene: Ein Eintrag wird
-> **nur hinzugefügt, wenn das Modell `chat-200` antwortet und Tools aufrufen kann** — ein Modell ohne Tool-Unterstützung,
-> ein toter Schlüssel oder ein toter Anbieter wird verworfen statt hinzugefügt. Führe den Verify-Schritt jederzeit erneut aus;
-> Fehler werden gemeldet, nie versteckt.
+> **Qualitäts-Gates.** Jeder Schlüssel hier hat ein Live-`chat-200` bestanden, bevor er in `keys.txt`
+> geschrieben wurde (tote Schlüssel werden nie ausgeliefert). Router-Kombos folgen derselben Regel auf
+> Modellebene: Ein Eintrag wird **nur hinzugefügt, wenn das Modell `chat-200` antwortet und Tools aufrufen
+> kann** — ein Modell ohne Tool-Unterstützung, ein toter Schlüssel oder ein toter Provider wird verworfen
+> statt hinzugefügt. Führe den Verifizierungsschritt jederzeit erneut aus; Fehler werden gemeldet, nie versteckt.
 
 ## 🧭 So funktioniert es
 
@@ -144,8 +159,8 @@ inbox (one address per account)                                  a fresh address
 | Schritt | Aufruf | Anmerkungen |
 | --- | --- | --- |
 | 1 Exit prüfen | `GET /api/status` + `challenges.cloudflare.com/turnstile/v0/api.js` | ein Exit, der keines von beiden laden kann, wird übersprungen, bevor ein Konto verbraucht wird |
-| 2 Mailbox | Emailnator `POST /api/generate-email` | eine frische Gmail pro Konto, in ihrer **punktfreien** Form verwendet: das Panel lehnt `+` und Punkte ab, und Emailnator selbst pollt dieselbe schlichte Adresse |
-| 3 Browser | Chrome über CDP, `GET /register` | ein von Null verschiedener `--remote-debugging-port` hält `navigator.webdriver` auf false |
+| 2 Mailbox | Emailnator `POST /api/generate-email` | eine frische Gmail pro Konto, in ihrer **punktfreien** Form verwendet: Das Panel lehnt `+` und Punkte ab, und Emailnator selbst pollt dieselbe schlichte Adresse |
+| 3 Browser | Chrome über CDP, `GET /register` | ein `--remote-debugging-port` ungleich null hält `navigator.webdriver` auf false |
 | 4 Code senden | `GET /api/verification?email=…&turnstile=<fresh>` | In-Page-Fetch, damit das Session-Cookie mitfährt |
 | 5 Code lesen | Emailnator `/api/message-list` → `/api/message/<id>` | nur Mail, die tokeness nennt, zählt (die Boxen sind ein öffentlicher Pool); der Code sind sechs Hex-Zeichen im Body |
 | 6 Registrieren | `POST /api/user/register?turnstile=<fresh>` | `verification_code` ist der Feldname; das Token fährt in der Query **und** im Body mit |
@@ -164,21 +179,23 @@ node src/cli.js --connect-9router              # register keys.txt with a local 
 node src/cli.js --help
 ```
 
-| Env | Standard | Bedeutung |
+| Env / Flag | Standard | Bedeutung |
 | --- | --- | --- |
 | `TOKENESS_PROXIES` | `proxies.txt` | Exit-Pool, eine Zeile pro Proxy |
 | `TOKENESS_MODEL` | `tokeness/free` | Modell, das für das Live-Gate verwendet wird |
 | `CHROME_PATH` | automatisch erkannt | Chrome/Edge-Binary für den Captcha-Browser |
+| `--auto` | `on` | das Turnstile in der eingebauten Browser-Schiene lösen (Standard) |
+| `--dry` | `off` | den aufgelösten Plan ausgeben und beenden — keine Dateischreibvorgänge, keine Anfragen |
 
-Die CLI führt jeweils ein Konto aus: Das Panel bindet ein Konto an seine Adresse und seinen Exit, daher konkurrieren parallele Läufe nur um dieselbe Ressource.
+Die CLI läuft jeweils mit einem Konto: Das Panel bindet ein Konto an seine Adresse und seinen Exit, also konkurrieren parallele Läufe nur um dieselbe Ressource.
 
 ## 🛰️ Hinter einem Proxy
 
-**Optional — und das Tool funktioniert auch ohne, aber die Exit-Klasse entscheidet, wer minten kann.**
+**Optional — und das Tool funktioniert auch ohne, aber die Exit-Klasse entscheidet, wer erzeugen kann.**
 
-- **Mit einem Pool:** übergib `--pool <file>` (oder setze `TOKENESS_PROXIES`), und jede Anfrage für ein Konto — der Captcha-Browser eingeschlossen — geht durch einen festgelegten Exit aus dieser Liste, fail-closed: Ein Pool, der keinen erreichbaren Exit liefert, lässt den Lauf fehlschlagen, statt eine Anfrage von deiner eigenen Adresse durchsickern zu lassen. `--screen` prüft jeden Exit auf `/api/status` **und** das Turnstile-Skript, bevor er verwendet wird.
-- **Ohne einen Pool:** die CLI gibt `running WITHOUT a proxy (direct)` aus und verbindet direkt. Gemessen: Auf einem Residential-Host löste das Widget im Managed-Modus weiterhin und ein vollständiges Konto wurde in 57 s erstellt, während dieselbe Seite von einer Datacenter-IP die Challenge nie einbindet (`600010`, 0/60 Klicks in einer Probe). Direkt ist also von einer Heimverbindung aus in Ordnung und von einem VPS aus hoffnungslos.
-- Chrome kann sich nicht an einem SOCKS5-Proxy authentifizieren, daher werden `socks5://user:pass@host:port`-Zeilen mit einem Hinweis verworfen; einfache `socks5://host:port` und `http://host:port` funktionieren.
+- **Mit einem Pool:** übergib `--pool <file>` (oder setze `TOKENESS_PROXIES`) und jede Anfrage für ein Konto — der Captcha-Browser eingeschlossen — geht durch einen gepinnten Exit aus dieser Liste, fail-closed: Ein Pool, der keinen erreichbaren Exit liefert, lässt den Lauf fehlschlagen, statt eine Anfrage von deiner eigenen Adresse durchsickern zu lassen. `--screen` prüft jeden Exit auf `/api/status` **und** das Turnstile-Skript, bevor er verwendet wird.
+- **Ohne einen Pool:** die CLI gibt `running WITHOUT a proxy (direct)` aus und verbindet direkt. Gemessen: Auf einem Residential-Host löste das Widget im Managed-Modus trotzdem und ein vollständiges Konto wurde in 57 s erzeugt, während dieselbe Seite von einer Datacenter-IP die Challenge nie einbindet (`600010`, 0/60 Klicks in einer Probe). Direkt ist also von einer Heimverbindung aus in Ordnung und von einem VPS aus hoffnungslos.
+- Chrome kann sich nicht an einem SOCKS5-Proxy authentifizieren, daher werden `socks5://user:pass@host:port`-Zeilen mit einem Hinweis verworfen; einfaches `socks5://host:port` und `http://host:port` funktionieren.
 
 ## 📄 Dateien
 
@@ -187,6 +204,7 @@ Die CLI führt jeweils ein Konto aus: Das Panel bindet ein Konto an seine Adress
 | `keys.txt` | ein live-verifizierter Schlüssel pro Zeile — von Git ignoriert |
 | `accounts.json` | E-Mail / Benutzername / Passwort / Schlüssel / Exit / Kontingent / Schritt-Status — von Git ignoriert |
 | `proxies.txt` | deine Exits — von Git ignoriert |
+| `keys-dead.txt` | Schlüssel, die aufgehört haben, auf `--verify-only` zu antworten — von Git ignoriert |
 | `out/` | Lauf-Logs, Screenshots und `attempts.jsonl` (eine Zeile pro fehlgeschlagenem Versuch mit seiner Fehlerklasse) — von Git ignoriert |
 
 ## 🔌 Mit 9Router verbinden
@@ -216,14 +234,14 @@ Standardwerte: `--prefix tokeness`, `--base-url https://tokeness.ai/v1`, `--mode
 | | |
 | --- | --- |
 | 🏢 Anbieter | **Tokeness** — [tokeness.ai](https://tokeness.ai) |
-| 🎁 Was der Anbieter gibt | ein frisches Konto mit 18000 Kontingent-Einheiten (≈ $0.036) und einem Check-in-Bonus, den er hinter seinem eigenen Captcha gated |
+| 🎁 Was der Anbieter gibt | ein frisches Konto mit 18000 Kontingent-Einheiten (≈ $0.036) und einen Check-in-Bonus, den er hinter seinem eigenen Captcha gated |
 | 🔑 Was ein Schlüssel dir bringt | einen 48-Zeichen-Schlüssel auf seinem eigenen Konto, erstellt mit `unlimited_quota` und chat-verifiziert auf `tokeness/free` |
 | 🌐 API-Form | OpenAI-kompatibel: `POST https://tokeness.ai/v1/chat/completions` |
 | 🔒 Deine Daten | nur `tokeness.ai` und dein Inbox-Backend werden kontaktiert; Schlüssel bleiben auf deiner Maschine |
 
 ## 🐞 Probleme
 
-Wenn Tokeness seine E-Mail-Regel ändert (Whitelist, Alias-Richtlinie), seinen Turnstile-Sitekey oder die Key-Reveal-Route, stoppt das Tool an diesem Schritt und die `out/attempts.jsonl`-Zeile sagt, welche Fehlerklasse es getroffen hat (`address-policy`, `mail`, `register`, `login`, `token`, `chat-gate`, `turnstile`, `exit`). **[Öffne ein Issue](../../issues)** mit dem Befehl und der exakten Ausgabe.
+Wenn Tokeness seine E-Mail-Regel (Whitelist, Alias-Richtlinie), seinen Turnstile-Sitekey oder die Key-Reveal-Route ändert, stoppt das Tool an diesem Schritt und die `out/attempts.jsonl`-Zeile sagt, welche Fehlerklasse es getroffen hat (`address-policy`, `mail`, `register`, `login`, `token`, `chat-gate`, `turnstile`, `exit`). **[Öffne ein Issue](../../issues)** mit dem Befehl und der exakten Ausgabe.
 
 ## 📄 Lizenz
 

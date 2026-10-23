@@ -35,7 +35,7 @@
 
 ## ✨ Bu neden var
 
-Tokeness, küresel bir CDN arkasında çalışan bir **New-API çatalıdır** (`v1.0.0-rc.40-tokeness-intl.15`). Her kimlik doğrulama rotası bir Cloudflare Turnstile **ve** bir e-posta kuralı arkasındadır ve naif bir betiği durduran şey captcha değil, e-posta kuralıdır: panel bir **alan adı beyaz listesi** tutar (yalnızca `gmail.com` / `outlook.com`) ve `+` içeren herhangi bir adresi "özel semboller" gerekçesiyle reddeder. Adres sade olduğunda ve bir konut çıkışı widget'ı çözdüğünde, kayıt normal bir `kod gönder → kaydol → giriş yap` akışıdır ve her hesap **`unlimited_quota: true` olan tek bir anahtar** verir. Araç uçtan uca iki kez kanıtlandı: laboratuvar hattı **her hesabın kendi anahtarını ürettiğini** gösterdi ve bu paketlenmiş CLI ardından **57 saniyelik doğrudan bir çalıştırmada** 11. anahtarı üretti — hepsi yazılmadan önce `tokeness/free` üzerinde sohbetle doğrulandı, **11/11'i bağımsız yeniden kontrolde hâlâ canlı**.
+Tokeness, küresel bir CDN arkasındaki bir **New-API çatalıdır** (`v1.0.0-rc.40-tokeness-intl.15`). Her kimlik doğrulama rotası bir Cloudflare Turnstile **ve** bir e-posta kuralının arkasındadır ve naif bir betiği durduran şey captcha değil, e-posta kuralıdır: panel bir **alan adı beyaz listesi** tutar (yalnızca `gmail.com` / `outlook.com`) ve `+` içeren herhangi bir adresi "özel semboller" gerekçesiyle reddeder. Adres sade olduğunda ve konut tipi bir çıkış widget'ı çözdüğünde, kayıt normal bir `kod gönder → kaydol → giriş yap` akışıdır ve her hesap **`unlimited_quota: true` olan bir anahtar** verir. Araç uçtan uca iki kez kanıtlandı: laboratuvar hattı **her hesabın kendi anahtarını ürettiğini** gösterdi ve bu paketlenmiş CLI ardından **57 saniyelik doğrudan bir çalıştırmada** 11. anahtarı üretti — hepsi yazılmadan önce `tokeness/free` üzerinde sohbetle doğrulandı, **11/11'i bağımsız yeniden kontrolde hâlâ canlı**.
 
 ## 🎁 Ücretsiz katman — ne kadar alıyorsunuz
 
@@ -44,26 +44,26 @@ Tokeness, küresel bir CDN arkasında çalışan bir **New-API çatalıdır** (`
 | Hesap başına kayıt kotası | **18000 birim** — `GET /api/user/self` her yeni hesapta `quota: 18000` yanıtını verir |
 | Bunun değeri | `quota_per_unit 500000`, `usd_exchange_rate 7`, `price 7` → verilen hak **≈ $0.036** |
 | Anahtar kotası | anahtar `unlimited_quota: true` ile oluşturulur, yani token düzeyindeki kontrol kapalıdır; hesabın kendi kotası yine de aktarımı sınırlar |
-| Günlük giriş | `checkin_enabled: true`, ancak bir oturumla `200 {"success":false,"message":"Turnstile token 为空"}` yanıtını verir — kendi token'ını ister, bu yüzden araç bunu talep etmez |
+| Günlük giriş | `checkin_enabled: true`, ancak bir oturumla `200 {"success":false,"message":"Turnstile token 为空"}` yanıtını verir — kendi token'ını ister, bu yüzden araç bunu talep etmeden bırakır |
 | Adres politikası | **yalnızca gmail.com ve outlook.com** (gerçek token'larla alan adı alan adı denendi); `+` takma adı birebir reddedilir — `管理员已启用邮箱地址别名限制，您的邮箱地址由于包含特殊符号而被拒绝。` |
 | Adres başına bir hesap | bir adres bir kez kullanılır; reddedilen/alınmış bir kutu yeni bir Emailnator kutusuyla değiştirilir |
-| Çıkış sınıfı | Turnstile widget'ı **konut çıkışından** yönetilen modda geçer (WARP ve düz bir konut ana makinesi ölçüldü); bir veri merkezi IP'si tarayıcıda `600010` yanıtını verir (0/60 tıklama) |
+| Çıkış sınıfı | Turnstile widget'ı **konut tipi bir çıkıştan** yönetilen modda geçer (WARP ve düz bir konut ana makinesi ölçüldü); veri merkezi IP'si tarayıcıda `600010` yanıtını verir (0/60 tıklama) |
 | Ölçeklenen birim | **bir hesap = bir anahtar** ve anahtar yalnızca canlı bir sohbet 200'ünden sonra yazılır |
 
-> 💡 Ücretsiz katman Tokeness tarafından belirlenir ve değişebilir. Canlı sayıları [tokeness.ai](https://tokeness.ai) adresinden kontrol edin — ve kararı aracın kendi kapısına bırakın:
+> 💡 Ücretsiz katman Tokeness tarafından belirlenir ve değişebilir. Güncel sayıları [tokeness.ai](https://tokeness.ai) adresinden kontrol edin — ve kararı aracın kendi kapısına bırakın:
 
 ```bash
-node src/cli.js --verify-only     # every key in keys.txt is re-tested with a real chat call
+node src/cli.js --verify-only     # keys.txt içindeki her anahtar gerçek bir sohbet çağrısıyla yeniden test edilir
 ```
 
 ## 🤖 Modeller — 22'sinin tamamı
 
-`GET /v1/models` (canlı bir anahtarla 200) **22 kimlik** duyurur:
+`GET /v1/models` (canlı bir anahtarla 200) **22 id** duyurur:
 
-| Model Kimliği | not |
+| Model ID | not |
 | --- | --- |
-| `tokeness/free` | **doğrulanan satır — her anahtar bunda 200 yanıtını verdi (yeniden kontrolde 11/11)** |
-| `mimo-v2.6-flash` | **ayrıca 200 kaydedildi** — bağımsız yeniden kontrol sırasında bir anahtar bunda `ok` yanıtını verdi |
+| `tokeness/free` | **doğrulanan satır — her anahtar buna 200 yanıtı verdi (yeniden kontrolde 11/11)** |
+| `mimo-v2.6-flash` | **ayrıca 200 kaydedildi** — bağımsız yeniden kontrolde bir anahtar buna `ok` yanıtı verdi |
 | `deepseek-v4.1-flash`, `deepseek-v4.1-flash-1017`, `deepseek-v4-flash`, `deepseek-v4-flash-vision-exp`, `deepseek-v4-pro` | duyurulur, tek tek kapıdan geçirilmedi |
 | `glm-5.3`, `glm-5.3-flash`, `glm-5.3-flashx` | duyurulur, tek tek kapıdan geçirilmedi |
 | `qwen3.8-flash`, `qwen3.7-plus`, `qwen3.8-max` | duyurulur, tek tek kapıdan geçirilmedi |
@@ -71,7 +71,7 @@ node src/cli.js --verify-only     # every key in keys.txt is re-tested with a re
 | `kimi-k2.6`, `kimi-k2.7-code`, `kimi-k3` | duyurulur, tek tek kapıdan geçirilmedi |
 | `minimax-m3`, `muse-spark-1.3-contributor`, `hy3` | duyurulur, tek tek kapıdan geçirilmedi |
 
-`tokeness/free`, her anahtarın kapıdan geçirildiği modeldir; `mimo-v2.6-flash` de bir 200 aldı. Kalan kimlikler `/v1/models` tarafından duyurulur ancak tek tek sohbet kapısından geçirilmedi, bu yüzden burada iddia edilmez.
+`tokeness/free` her anahtarın kapıdan geçirildiği modeldir; `mimo-v2.6-flash` de bir 200 aldı. Kalan id'ler `/v1/models` tarafından duyurulur ancak tek tek sohbet kapısından geçirilmedi, bu yüzden burada iddia edilmiyor.
 
 ```bash
 curl https://tokeness.ai/v1/chat/completions \
@@ -81,7 +81,7 @@ curl https://tokeness.ai/v1/chat/completions \
 
 ## 🧪 API nasıl kullanılır
 
-Temel URL **`https://tokeness.ai/v1`** — OpenAI uyumlu. `tokeness.io`, `tokeness.ai` adresine bir `301`'dir ve panelin kendi `/api/status` uç noktası bir CDN ana makinesi olan `n.tokeness.dev` adresini duyurur (aynı `/v1`'i sunar, bu yüzden ana makine meşgulken kullanışlı bir ikinci uç noktadır).
+Temel URL **`https://tokeness.ai/v1`** — OpenAI uyumlu. `tokeness.io`, `tokeness.ai` adresine bir `301`'dir ve panelin kendi `/api/status`'u bir CDN ana makinesi olan `n.tokeness.dev`'i duyurur (aynı `/v1`'i sunar, bu yüzden ana makine meşgulken kullanışlı ikinci bir uç noktadır).
 
 ```python
 from openai import OpenAI
@@ -100,11 +100,26 @@ node src/launcher.js        # interactive: mint / verify / screen / settings / 9
 # or: node src/cli.js --count 1 --pool proxies.txt
 ```
 
-Bir anahtar `keys.txt` dosyasına **yalnızca** `POST /v1/chat/completions` gerçek içerik veya akıl yürütme içeriğiyle 200 yanıtını verdikten sonra yazılır; `accounts.json` e-posta / kullanıcı adı / parola / anahtar / çıkış / kota ve adım başına durumları saklar.
+Bir anahtar `keys.txt` dosyasına **yalnızca** `POST /v1/chat/completions` gerçek içerik veya akıl yürütme içeriğiyle 200 yanıtı verdikten sonra yazılır; `accounts.json` e-posta / kullanıcı adı / parola / anahtar / çıkış / kota ve adım başına durumları saklar.
 
 ### 🖱️ Başlatıcı
 
-Başlatıcı proxy listesini ve sayıyı sorar, bunları `launcher.config.json` içinde hatırlar ve CLI'yi çalıştırır — üret, doğrula, çıkışları tara, ayarlar, yardım, 9Router'a Bağlan.
+Başlatıcı tek komutluk yoldur: kaç anahtar istediğinizi sorar (Enter = `10`) ve CLI'yi `--auto` ile çalıştırır; `proxies.txt` mevcut olduğunda otomatik olarak alınır, aksi halde çalıştırma doğrudan gider. Ayrıca her anahtarı yeniden kontrol eder, çıkış listenizi tarar, hatırlanan ayarları gösterir, anahtarları 9Router / OmniRoute'a bağlar — ve baştan Chrome'u kontrol eder, böylece eksik bir tarayıcı bir çalıştırma başlamadan önce bildirilir.
+
+### 🚀 Tek komut
+
+```bash
+node src/launcher.js       # menu → "1) Mint keys" → how many keys? [10]
+node src/cli.js --count 10 # the same run, non-interactive
+```
+
+Aracın tamamı bu: `--auto` varsayılan olarak açıktır — Turnstile yerleşik tarayıcı hattında çözülür (`proxies.txt`'ten sabitlenmiş tek bir çıkış üzerinden gerçek bir Chrome veya hiç yoksa DIRECT) ve bir anahtar `keys.txt` dosyasına yalnızca kendi canlı sohbet 200'ünden sonra ulaşır. `--dry` çözümlenen planı — sayı, çıkışlar, çözücü, model — yazdırır ve hiçbir dosyaya veya ağa dokunmadan çıkar:
+
+```bash
+node src/cli.js --count 10 --dry
+```
+
+> ⚠️ **Şartlar ve hesap riski.** Üçüncü taraf bir kaydı otomatikleştirmek sizin kararınız ve sorumluluğunuzdur, bu deponun değil. Bunu çalıştırmadan önce Tokeness'in şartlarını okuyun ve bunlara uyun: panel bir hesabı bir adrese bağlar, artı takma adlı postayı reddeder, fark ettiklerini yasaklayabilir ve e-posta/captcha kuralları önceden haber verilmeden değişebilir. Yalnızca gerçekten kullandığınız kadar üretin.
 
 ## ✅ Çalıştığı doğrulandı — her anahtar test edilir
 
@@ -116,17 +131,17 @@ Başlatıcı proxy listesini ve sayıyı sorar, bunları `launcher.config.json` 
 | panelin postası | `noreply@<panel-mail>` adresinden **«Tokeness email verification»**; kod gövdede altı onaltılık karakterdir (`Your verification code is: 7ca362`), TTL 10 dakika, teslimat 34 sn – 4 dk ölçüldü |
 | `POST /api/user/register?turnstile=<fresh>` | `{username, password, email, verification_code, aff_code, turnstile}` ile **200** `{"success":true}` |
 | `POST /api/user/login?turnstile=<fresh>` (düz parola) | **200** — yanıt kimlik doğrulama paketini taşır (`data.access_token`) |
-| `GET /api/user/self` | **200** `id`, `quota 18000`, `group default` — **yalnızca** `Authorization: Bearer <access_token>` ile: yalnızca çerezle `401 {"code":"AUTH_UNAUTHORIZED","message":"Unauthorized, invalid access token"}` |
-| `POST /api/token/` | **200** ama **yanıtta anahtar yok**; liste onu maskelenmiş olarak verir (`xxek**********VKbX`); `POST /api/token/<id>/key` → gerçek 48 karakterlik anahtarla **200** |
-| `GET /v1/models` | **200**, **22** kimlik |
+| `GET /api/user/self` | **200** `id`, `quota 18000`, `group default` — **yalnızca** `Authorization: Bearer <access_token>` ile: yalnızca çerezli yanıt `401 {"code":"AUTH_UNAUTHORIZED","message":"Unauthorized, invalid access token"}` |
+| `POST /api/token/` | **200** ancak **yanıtta anahtar yok**; liste onu maskelenmiş olarak verir (`xxek**********VKbX`); `POST /api/token/<id>/key` → gerçek 48 karakterlik anahtarla **200** |
+| `GET /v1/models` | **200**, **22** id |
 | `POST /v1/chat/completions` (`tokeness/free`) — yazılmadan önce **her** anahtar için | gerçek içerikle **200** — çalıştırma her anahtarı tamamladı |
-| **bu paketten tam bir üretim** (`--count 1`, doğrudan, havuz yok) | **57 sn'de her anahtar** — posta kutusu, 730 karakterlik token, kod, kayıt 200, giriş 200, anahtar 200, sohbet 200 |
+| **bu paketten tek bir tam üretim** (`--count 1`, doğrudan, havuz yok) | **57 sn'de her anahtar** — posta kutusu, 730 karakterlik token, kod, kayıt 200, giriş 200, anahtar 200, sohbet 200 |
 | `keys.txt`'in bağımsız yeniden kontrolü (ayrı süreç, `--verify-only`) | **her anahtar doğrulandı** — onu için `tokeness/free`, on birincisi için `mimo-v2.6-flash` |
-| karışık bir çıkış örneği üzerinde `--screen` | konut çıkışı ve bir veri merkezi çıkışı `/api/status` + Turnstile-varlık kapılarını geçti; diğer ikisi zaman aşımına uğradı — tarayıcı hattı hâlâ widget'ın kabul ettiği bir çıkış sınıfına ihtiyaç duyuyor |
+| karışık bir çıkış örneği üzerinde `--screen` | konut tipi çıkış ve bir veri merkezi çıkışı `/api/status` + Turnstile varlık kapılarını geçti; diğer ikisi zaman aşımına uğradı — tarayıcı hattı yine de widget'ın kabul ettiği bir çıkış sınıfına ihtiyaç duyar |
 
 > **Kalite kapıları.** Buradaki her anahtar `keys.txt` dosyasına yazılmadan önce canlı bir `chat-200` geçti
 > (ölü anahtarlar asla gönderilmez). Yönlendirici kombinasyonları model düzeyinde aynı kuralı izler: bir giriş
-> **yalnızca model `chat-200` yanıtını verirse ve araçları çağırabilirse** eklenir — araç desteği olmayan bir model,
+> **yalnızca model `chat-200` yanıtlıyorsa ve araçları çağırabiliyorsa** eklenir — araç desteği olmayan bir model,
 > ölü bir anahtar veya ölü bir sağlayıcı eklenmek yerine çıkarılır. Doğrulama adımını istediğiniz zaman yeniden çalıştırın;
 > başarısızlıklar bildirilir, asla gizlenmez.
 
@@ -147,9 +162,9 @@ inbox (one address per account)                                  a fresh address
 | 2 posta kutusu | Emailnator `POST /api/generate-email` | hesap başına bir yeni gmail, **noktasız** biçiminde kullanılır: panel `+` ve noktaları reddeder ve Emailnator'ın kendisi de aynı sade adresi yoklar |
 | 3 tarayıcı | CDP üzerinden Chrome, `GET /register` | sıfır olmayan bir `--remote-debugging-port`, `navigator.webdriver` değerini false tutar |
 | 4 kod gönder | `GET /api/verification?email=…&turnstile=<fresh>` | sayfa içi fetch, böylece oturum çerezi de gelir |
-| 5 kodu oku | Emailnator `/api/message-list` → `/api/message/<id>` | yalnızca tokeness adını taşıyan posta sayılır (kutular herkese açık bir havuzdur); kod gövdede altı onaltılık karakterdir |
+| 5 kodu oku | Emailnator `/api/message-list` → `/api/message/<id>` | yalnızca tokeness adını taşıyan posta sayılır (kutular ortak bir havuzdur); kod gövdede altı onaltılık karakterdir |
 | 6 kaydol | `POST /api/user/register?turnstile=<fresh>` | `verification_code` alan adıdır; token hem sorguda **hem de** gövdede gelir |
-| 7 giriş yap | `POST /api/user/login?turnstile=<fresh>` | düz parola (`password_login_encryption_enabled: false`); `access_token` yakala |
+| 7 giriş yap | `POST /api/user/login?turnstile=<fresh>` | düz parola (`password_login_encryption_enabled: false`); `access_token`'ı yakala |
 | anahtar | `POST /api/token/` → liste → `POST /api/token/<id>/key` | bearer gerekli; oluşturma yanıtında anahtar yok ve liste maskelenmiş |
 | 9 kapı | `GET /v1/models` + bir tamamlama | içerikle 200 = anahtar canlı ve ancak o zaman yazılır |
 
@@ -164,11 +179,13 @@ node src/cli.js --connect-9router              # register keys.txt with a local 
 node src/cli.js --help
 ```
 
-| Ortam değişkeni | Varsayılan | Anlamı |
+| Ortam değişkeni / bayrak | Varsayılan | Anlamı |
 | --- | --- | --- |
-| `TOKENESS_PROXIES` | `proxies.txt` | çıkış havuzu, satır başına bir proxy |
+| `TOKENESS_PROXIES` | `proxies.txt` | çıkış havuzu, proxy başına bir satır |
 | `TOKENESS_MODEL` | `tokeness/free` | canlı kapı için kullanılan model |
 | `CHROME_PATH` | otomatik algılanır | captcha tarayıcısı için Chrome/Edge ikili dosyası |
+| `--auto` | `on` | Turnstile'ı yerleşik tarayıcı hattında çöz (varsayılan) |
+| `--dry` | `off` | çözümlenen planı yazdır ve çık — dosya yazımı yok, istek yok |
 
 CLI aynı anda bir hesap çalıştırır: panel bir hesabı adresine ve çıkışına bağlar, bu yüzden paralel çalıştırmalar yalnızca aynı kaynak için yarışır.
 
@@ -176,9 +193,9 @@ CLI aynı anda bir hesap çalıştırır: panel bir hesabı adresine ve çıkı�
 
 **İsteğe bağlı — ve araç proxysiz de çalışır, ancak kimin üretebileceğine çıkış sınıfı karar verir.**
 
-- **Bir havuzla:** `--pool <file>` geçin (veya `TOKENESS_PROXIES` ayarlayın) ve bir hesap için her istek — captcha tarayıcısı dahil — o listeden sabitlenmiş tek bir çıkıştan geçer, fail-closed: erişilebilir çıkış vermeyen bir havuz, kendi adresinizden bir isteği sızdırmak yerine çalıştırmayı başarısız kılar. `--screen`, kullanılmadan önce her çıkışı `/api/status` **ve** Turnstile betiği üzerinde denetler.
-- **Havuz olmadan:** CLI `running WITHOUT a proxy (direct)` yazdırır ve doğrudan bağlanır. Ölçüldü: bir konut ana makinesinde widget yönetilen modda yine çözüldü ve tam bir hesap 57 sn'de üretildi, oysa aynı sayfa bir veri merkezi IP'sinden challenge'ı hiç yüklemedi (bir denemede `600010`, 0/60 tıklama). Yani doğrudan bağlantı ev bağlantısından iyidir ve bir VPS'ten umutsuzdur.
-- Chrome bir SOCKS5 proxy'sine kimlik doğrulayamaz, bu yüzden `socks5://user:pass@host:port` satırları bir notla birlikte düşürülür; düz `socks5://host:port` ve `http://host:port` çalışır.
+- **Bir havuzla:** `--pool <file>` geçirin (veya `TOKENESS_PROXIES` ayarlayın) ve bir hesap için her istek — captcha tarayıcısı dahil — o listeden sabitlenmiş tek bir çıkış üzerinden gider, fail-closed: erişilebilir çıkış vermeyen bir havuz, kendi adresinizden bir istek sızdırmak yerine çalıştırmayı başarısız kılar. `--screen`, her çıkışı kullanılmadan önce `/api/status` **ve** Turnstile betiği üzerinde denetler.
+- **Havuz olmadan:** CLI `running WITHOUT a proxy (direct)` yazdırır ve doğrudan bağlanır. Ölçüldü: konut tipi bir ana makinede widget yönetilen modda yine çözüldü ve tam bir hesap 57 sn'de üretildi, oysa aynı sayfa bir veri merkezi IP'sinden challenge'ı hiç bağlamaz (`600010`, bir denemede 0/60 tıklama). Yani doğrudan bağlantı ev bağlantısından sorunsuz, bir VPS'ten umutsuzdur.
+- Chrome bir SOCKS5 proxy'sine kimlik doğrulayamaz, bu yüzden `socks5://user:pass@host:port` satırları bir notla birlikte çıkarılır; düz `socks5://host:port` ve `http://host:port` çalışır.
 
 ## 📄 Dosyalar
 
@@ -187,7 +204,8 @@ CLI aynı anda bir hesap çalıştırır: panel bir hesabı adresine ve çıkı�
 | `keys.txt` | satır başına bir canlı doğrulanmış anahtar — git tarafından yok sayılır |
 | `accounts.json` | e-posta / kullanıcı adı / parola / anahtar / çıkış / kota / adım durumları — git tarafından yok sayılır |
 | `proxies.txt` | çıkışlarınız — git tarafından yok sayılır |
-| `out/` | çalıştırma günlükleri, ekran görüntüleri ve `attempts.jsonl` (başarısız her deneme için hata sınıfıyla birlikte bir satır) — git tarafından yok sayılır |
+| `keys-dead.txt` | `--verify-only` yanıtını vermeyi bırakan anahtarlar — git tarafından yok sayılır |
+| `out/` | çalıştırma günlükleri, ekran görüntüleri ve `attempts.jsonl` (başarısız deneme başına bir satır, hata sınıfıyla birlikte) — git tarafından yok sayılır |
 
 ## 🔌 9Router'a bağlan
 
@@ -216,10 +234,10 @@ Varsayılanlar: `--prefix tokeness`, `--base-url https://tokeness.ai/v1`, `--mod
 | | |
 | --- | --- |
 | 🏢 Sağlayıcı | **Tokeness** — [tokeness.ai](https://tokeness.ai) |
-| 🎁 Sağlayıcının verdikleri | 18000 kota birimi (≈ $0.036) olan yeni bir hesap ve kendi captcha'sı arkasına kapıladığı bir giriş bonusu |
-| 🔑 Bir anahtar size ne kazandırır | kendi hesabında `unlimited_quota` ile oluşturulmuş ve `tokeness/free` üzerinde sohbetle doğrulanmış 48 karakterlik bir anahtar |
+| 🎁 Sağlayıcının verdikleri | 18000 kota birimi (≈ $0.036) olan yeni bir hesap ve kendi captcha'sının arkasına kapıladığı bir giriş bonusu |
+| 🔑 Bir anahtarın size kazandırdıkları | kendi hesabında `unlimited_quota` ile oluşturulmuş ve `tokeness/free` üzerinde sohbetle doğrulanmış 48 karakterlik bir anahtar |
 | 🌐 API biçimi | OpenAI uyumlu: `POST https://tokeness.ai/v1/chat/completions` |
-| 🔒 Verileriniz | yalnızca `tokeness.ai` ve gelen kutunuzun arka ucuyla iletişim kurulur; anahtarlar makinenizde kalır |
+| 🔒 Verileriniz | yalnızca `tokeness.ai` ve posta kutusu arka ucunuzla iletişim kurulur; anahtarlar makinenizde kalır |
 
 ## 🐞 Sorunlar
 
@@ -231,6 +249,6 @@ MIT © 2026 — bkz. [LICENSE](LICENSE).
 
 <div align="center">
 
-**[MIT](LICENSE)** © 2026 tokeness-bulk-apikey katkıda bulunanlar
+**[MIT](LICENSE)** © 2026 tokeness-bulk-apikey contributors
 
 </div>
