@@ -913,15 +913,16 @@ async function verifyOnly(exits) {
       }
       const g = await proveKey(exit, keys[i]);
       if (g.ok) live++;
-      else dead.push(keys[i]);
+      else if ([401, 402, 403].includes(Number(g.status))) dead.push({ key: keys[i], why: g.status });
       console.log(`  ${g.ok ? '✔' : '✘'} ${keys[i].slice(0, 8)}… chat=${g.ok ? 200 : g.status || 0} ${g.ok ? `${g.model} "${g.sample}"` : String(g.sample).slice(0, 90)}`);
     } catch (e) {
-      console.log(`  ✘ ${keys[i].slice(0, 8)}… ${String(e.message).slice(0, 90)}`);
-      dead.push(keys[i]);
+      console.log(`  ✘ ${keys[i].slice(0, 8)}… ${String(e.message).slice(0, 90)} (transport — key kept)`);
     }
   }
   if (dead.length) {
-    fs.appendFileSync(DEAD_FILE, dead.map((k) => k + '\n').join(''));
+    const parked = fs.existsSync(DEAD_FILE) ? fs.readFileSync(DEAD_FILE, 'utf8') : '';
+    const fresh = dead.filter((d) => !parked.includes(d.key)).map((d) => `${d.key}\t${d.why}\t${new Date().toISOString()}`);
+    if (fresh.length) fs.appendFileSync(DEAD_FILE, fresh.join('\n') + '\n');
     console.log(`dead key(s) → ${DEAD_FILE}`);
   }
   console.log(`verify: ${live}/${keys.length} keys live`);
