@@ -9,7 +9,7 @@
  * Three gates stack on this panel, and all three are handled here:
  *   1. Cloudflare Turnstile (`0x4AAAAAADUMi6GTHDf1f5T7`); every auth route wants
  *      `?turnstile=`. The widget passes in managed mode through a residential
- *      exit (proxy measured), so the tool launches a real Chrome over one vetted
+ *      exit (WARP measured), so the tool launches a real Chrome over one vetted
  *      exit and drives an explicit-render widget via CDP (Page/Runtime + a tiny
  *      built-in WebSocket client — still zero dependencies). Datacenter exits
  *      never issue a token here (0/60 clicks, error `600010`), which is exactly
@@ -31,7 +31,7 @@
  *   3. browser   Chrome → `/register` → in-page Turnstile token
  *   4. send code `GET /api/verification?email=…&turnstile=<fresh>` (in-page fetch)
  *   5. code      poll the inbox — the panel mails «Tokeness email verification»
- *                from `send@<panel-mail>`, the code is **six hex chars in the
+ *                from `noreply@<panel-mail>`, the code is **six hex chars in the
  *                body** (`Your verification code is: 7ca362`), life 10 minutes,
  *                delivery measured 34 s – 4 min, so the window defaults to 600 s
  *                and only mail naming tokeness is ever trusted (the pool boxes

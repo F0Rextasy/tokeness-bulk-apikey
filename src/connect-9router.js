@@ -13,7 +13,7 @@
  * Usage:
  *   node src/connect-9router.js \
  *     --base http://localhost:20128 --password 123456 \
- *     --api-key <48-char key, no `sk-` prefix> [--name "Tokeness"] [--prefix tokeness]
+ *     --api-key YOUR_KEY [--name "Tokeness"] [--prefix tokeness]
  *
  *   node src/connect-9router.js                  # register every key in keys.txt
  *   node src/connect-9router.js --model <id>     # pin the connection's default model
@@ -33,7 +33,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const UA = 'tokeness-bulk-9router-connector/1.0';
+const UA = 'tokeness-bulk-9router-connector/1.0'
 
 const DEFAULTS = {
   base: 'http://localhost:20128',

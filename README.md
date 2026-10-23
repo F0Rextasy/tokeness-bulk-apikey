@@ -21,7 +21,7 @@
 [![OmniRoute](https://img.shields.io/badge/OmniRoute-connector-8B5CF6?style=for-the-badge)](#-connect-to-omniroute)
 [![X](https://img.shields.io/badge/X-%40bigbullapp-000000?style=for-the-badge&logo=x&logoColor=white)](https://x.com/bigbullapp)
 
-[🛠 Quick start](#-quick-start) · [🎁 Free tier](#-free-tier--how-much-you-get) · [🤖 Models](#-models--all-22-of-them) · [🧪 Use the API](#-how-to-use-the-api) · [✅ Verified](#-verified-working--every-key-is-tested) · [🧭 How it works](#-how-it-works) · [🔌 9Router](#-connect-to-9router) · [⚙️ Options](#️-cli-options) · [🛰️ Proxies](#️-behind-a-proxy) · [🐞 Issues](#-issues)
+[🛠 Quick start](#-quick-start) · [🎁 Free tier](#-free-tier--how-much-you-get) · [🤖 Models](#-models--all-22-of-them) · [🧪 Use the API](#-how-to-use-the-api) · [✅ Verified](#-verified-working--every-key-is-tested) · [🧭 How it works](#-how-it-works) · [🔌 9Router](#-connect-to-9router) · [🔌 OmniRoute](#-connect-to-omniroute) · [⚙️ Options](#️-cli-options) · [🛰️ Proxies](#️-behind-a-proxy) · [🐞 Issues](#-issues)
 
 </div>
 
@@ -35,7 +35,7 @@
 
 ## ✨ Why this exists
 
-Tokeness is a **New-API fork** (`v1.0.0-rc.40-tokeness-intl.15`) behind a global CDN. Every auth route is behind a Cloudflare Turnstile **and** an e-mail rule, and the e-mail rule — not the captcha — is what stops a naive script: the panel keeps a **domain whitelist** (`gmail.com` / `outlook.com` only) and refuses any address carrying `+` as "special symbols". Once the address is plain and a residential exit solves the widget, signup is a normal `send code → register → login` flow and each account hands out **one key with `unlimited_quota: true`**. The tool was proven end-to-end twice: the lab rail minted **keys verified**, and this packaged CLI then minted an 11th in a **57-second direct run** — every one of them chat-verified on `tokeness/free` before it was written, all **11/11 still live** on the independent re-check.
+Tokeness is a **New-API fork** (`v1.0.0-rc.40-tokeness-intl.15`) behind a global CDN. Every auth route is behind a Cloudflare Turnstile **and** an e-mail rule, and the e-mail rule — not the captcha — is what stops a naive script: the panel keeps a **domain whitelist** (`gmail.com` / `outlook.com` only) and refuses any address carrying `+` as "special symbols". Once the address is plain and a residential exit solves the widget, signup is a normal `send code → register → login` flow and each account hands out **one key with `unlimited_quota: true`**. The tool was proven end-to-end twice: the lab rail minted **each account minted its own key**, and this packaged CLI then minted an 11th in a **57-second direct run** — every one of them chat-verified on `tokeness/free` before it was written, all **11/11 still live** on the independent re-check.
 
 ## 🎁 Free tier — how much you get
 
@@ -47,7 +47,7 @@ Tokeness is a **New-API fork** (`v1.0.0-rc.40-tokeness-intl.15`) behind a global
 | Daily check-in | `checkin_enabled: true`, but with a session it answers `200 {"success":false,"message":"Turnstile token 为空"}` — it wants its own token, so the tool leaves it unclaimed |
 | Address policy | **gmail.com and outlook.com only** (probed domain by domain with real tokens); a `+` alias is refused verbatim — `管理员已启用邮箱地址别名限制，您的邮箱地址由于包含特殊符号而被拒绝。` |
 | One account per address | an address is spent once; a refused/taken box is replaced by a fresh Emailnator box |
-| Exit class | the Turnstile widget passes in managed mode from a **residential exit** (proxy and a plain residential host both measured); a datacenter IP answers `600010` in the browser (0/60 clicks) |
+| Exit class | the Turnstile widget passes in managed mode from a **residential exit** (WARP and a plain residential host both measured); a datacenter IP answers `600010` in the browser (0/60 clicks) |
 | The unit that scales | **one account = one key**, and the key is written only after a live chat 200 |
 
 > 💡 The free tier is set by Tokeness and can change. Check the live numbers at [tokeness.ai](https://tokeness.ai) — and let the tool's own gate decide:
@@ -58,7 +58,7 @@ node src/cli.js --verify-only     # every key in keys.txt is re-tested with a re
 
 ## 🤖 Models — all 22 of them
 
-`GET /v1/models` (200 with a verified keys) advertises **22 ids**:
+`GET /v1/models` (200 with a live key) advertises **22 ids**:
 
 | Model ID | note |
 | --- | --- |
@@ -107,26 +107,27 @@ The launcher asks for the proxy list and the count, remembers them in `launcher.
 
 ## ✅ Verified working — every key is tested
 
-> **Quality gates.** Every key here passed a live `chat-200` before it was written to `keys.txt`
-> (dead keys are never shipped). Router combos follow the same rule at the model level: an entry is
-> added **only if the model answers `chat-200` and can call tools** — a model without tool support,
-> a dead key or a dead provider is dropped instead of added. Works with **9Router and OmniRoute**.
-
 | Check | Result |
 | --- | --- |
 | `GET /api/status` | **200** — register on, e-mail verification on, `turnstile_check: true`, check-in on, sitekey `0x4AAAAAADUMi6GTHDf1f5T7` published |
 | `GET /api/verification?email=<plain gmail>&turnstile=<fresh>` | **200** `{"message":"","success":true}` |
 | the same call with a `+` alias | **200** `{"message":"管理员已启用邮箱地址别名限制，您的邮箱地址由于包含特殊符号而被拒绝。","success":false}` — the alias wall, measured |
-| the panel's mail | **«Tokeness email verification»** from `send@<panel-mail>`; the code is six hex chars in the body (`Your verification code is: 7ca362`), TTL 10 minutes, delivery measured 34 s – 4 min |
+| the panel's mail | **«Tokeness email verification»** from `noreply@<panel-mail>`; the code is six hex chars in the body (`Your verification code is: 7ca362`), TTL 10 minutes, delivery measured 34 s – 4 min |
 | `POST /api/user/register?turnstile=<fresh>` | **200** `{"success":true}` with `{username, password, email, verification_code, aff_code, turnstile}` |
 | `POST /api/user/login?turnstile=<fresh>` (plain password) | **200** — the answer carries the auth bundle (`data.access_token`) |
 | `GET /api/user/self` | **200** `id`, `quota 18000`, `group default` — **only** with `Authorization: Bearer <access_token>`: cookie-only answers `401 {"code":"AUTH_UNAUTHORIZED","message":"Unauthorized, invalid access token"}` |
 | `POST /api/token/` | **200** but **no key in the answer**; the list hands it out masked (`xxek**********VKbX`); `POST /api/token/<id>/key` → **200** with the real 48-char key |
 | `GET /v1/models` | **200**, **22** ids |
-| `POST /v1/chat/completions` (`tokeness/free`) — for **every** key before it is written | **200** with real content — the run completed **verified** |
-| **one full mint from this package** (`--count 1`, direct, no pool) | **verified** — mailbox, 730-char token, code, register 200, login 200, key 200, chat 200 |
-| independent re-check of `keys.txt` (separate process, `--verify-only`) | **verified working** — `tokeness/free` for ten of them, `mimo-v2.6-flash` for the eleventh |
+| `POST /v1/chat/completions` (`tokeness/free`) — for **every** key before it is written | **200** with real content — the run completed every key |
+| **one full mint from this package** (`--count 1`, direct, no pool) | **every key in 57 s** — mailbox, 730-char token, code, register 200, login 200, key 200, chat 200 |
+| independent re-check of `keys.txt` (separate process, `--verify-only`) | **every key verified** — `tokeness/free` for ten of them, `mimo-v2.6-flash` for the eleventh |
 | `--screen` over a mixed exit sample | the residential exit and one datacenter exit passed the `/api/status` + Turnstile-asset gates; two others timed out — the browser rail still needs an exit class the widget accepts |
+
+> **Quality gates.** Every key here passed a live `chat-200` before it was written to `keys.txt`
+> (dead keys are never shipped). Router combos follow the same rule at the model level: an entry is
+> added **only if the model answers `chat-200` and can call tools** — a model without tool support,
+> a dead key or a dead provider is dropped instead of added. Re-run the verify step any time;
+> failures are reported, never hidden.
 
 ## 🧭 How it works
 
@@ -148,7 +149,7 @@ inbox (one address per account)                                  a fresh address
 | 5 read code | Emailnator `/api/message-list` → `/api/message/<id>` | only mail naming tokeness counts (the boxes are a public pool); the code is six hex chars in the body |
 | 6 register | `POST /api/user/register?turnstile=<fresh>` | `verification_code` is the field name; the token rides in the query **and** the body |
 | 7 login | `POST /api/user/login?turnstile=<fresh>` | plain password (`password_login_encryption_enabled: false`); capture `access_token` |
-| 8 key | `POST /api/token/` → list → `POST /api/token/<id>/key` | bearer required; the create answer has no key and the list is masked |
+| key | `POST /api/token/` → list → `POST /api/token/<id>/key` | bearer required; the create answer has no key and the list is masked |
 | 9 gate | `GET /v1/models` + one completion | 200 with content = the key is live and only then is it written |
 
 ## ⚙️ CLI options
@@ -208,6 +209,7 @@ node src/cli.js --connect-omniroute      # same, from the CLI
 ```
 
 Defaults: `--prefix tokeness`, `--base-url https://tokeness.ai/v1`, `--model tokeness/free`. Models are served as `tokeness/<model id>`.
+
 ## 🔑 What one key gets you
 
 | | |
